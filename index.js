@@ -5,8 +5,12 @@ app.get('/', function (req, res) {
    res.send('Hello World');
 })
 
+
 var port = process.env.PORT || 8000
 
-server.listen(port, function() {
-    console.log("App is running on port " + port);
-});
+var server =  app.listen(port, function () {
+   var host = server.address().address
+   var port = server.address().port
+   
+   console.log("Example app listening at http://%s:%s", host, port)
+})
