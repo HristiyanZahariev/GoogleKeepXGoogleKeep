@@ -1,0 +1,32 @@
+{
+  "name": "googlekeepxgooglekeep",
+  "version": "1.0.0",
+  "description": "Better than Google Keep",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HristiyanZahariev/GoogleKeepXGoogleKeep.git"
+  },
+  "keywords": [
+    "note",
+    "application",
+    "google",
+    "keep",
+    "todo",
+    "list",
+    "voice",
+    "notes"
+  ],
+  "author": "Emil, Hristiyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HristiyanZahariev/GoogleKeepXGoogleKeep/issues"
+  },
+  "homepage": "https://github.com/HristiyanZahariev/GoogleKeepXGoogleKeep#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
