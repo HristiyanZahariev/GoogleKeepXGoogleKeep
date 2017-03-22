@@ -36,4 +36,3 @@ app.get('/users', function(request, response) {
         response.send(['Hello World!!!! HOLA MUNDO!!!!', rows]);
     });
 });
-connection.close();
