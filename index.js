@@ -23,7 +23,7 @@ var server =  app.listen(port, function () {
    console.log("Example app listening at http://%s:%s", host, port)
 })
 
-app.get('/', function(request, response) {
+app.get('/users', function(request, response) {
     connection.query('SELECT * from users', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
