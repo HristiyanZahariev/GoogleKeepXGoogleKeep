@@ -8,7 +8,7 @@ app.get('/', function (req, res) {
 
 var connection = mysql.createConnection({
 	host : 'us-cdbr-iron-east-03.cleardb.net',
-	username : 'b8113da7ef3f58',
+	user : 'b8113da7ef3f58',
 	password : 'f4cd18b',
 	database : 'heroku_2ddbb6dcb252ea7'
 })
