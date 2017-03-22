@@ -24,7 +24,7 @@ var server =  app.listen(port, function () {
 })
 
 app.get('/users', function(request, response) {
-    connection.query('SELECT * from users', function(err, rows, fields) {
+    connection.query('SELECT * from heroku_2ddbb6dcb252ea7 users', function(err, rows, fields) {
         if (err) {
             console.log('error: ', err);
             throw err;
