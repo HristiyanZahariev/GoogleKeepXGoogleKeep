@@ -14,14 +14,13 @@ var connection = mysql.createConnection(
 )
 
 app.get('/', function(request, response) {
-	connection.query('SELECT * from users', function(err, rows, fields) {
-		if(err) {
-			console.log('error: ', err);
-			throw err;
-		}
-		response.send(["Hello world!!!", rows])
-	});
-	response.send("Hello World!");
+    connection.query('SELECT * from users', function(err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['Hello World!!!! HOLA MUNDO!!!!', rows]);
+    });
 });
 
 
