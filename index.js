@@ -13,6 +13,17 @@ var connection = mysql.createConnection(
 	database : "heroku_2ddbb6dcb252ea7"
 )
 
+app.get('/', function(request, response) {
+	connection.query('SELECT * from users', function(err, rows, fields) {
+		if(err) {
+			console.log('error: ', err);
+			throw err;
+		}
+		response.send(["Hello world!!!", rows])
+	});
+	response.send("Hello World!");
+});
+
 
 var port = process.env.PORT || 8000
 
