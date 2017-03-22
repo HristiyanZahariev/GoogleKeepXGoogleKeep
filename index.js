@@ -13,6 +13,7 @@ var connection = mysql.createConnection({
 	database : "heroku_2ddbb6dcb252ea7"
 })
 
+connection.connect();
 
 var port = process.env.PORT || 8000
 
