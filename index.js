@@ -1,9 +1,17 @@
 var express = require('express');
 var app = express();
+var mysql = require('mysql')
 
 app.get('/', function (req, res) {
    res.send('Hello World');
 })
+
+var connection = mysql.createConnection(
+	host : "us-cdbr-iron-east-03.cleardb.net",
+	username : "b8113da7ef3f58",
+	password : "2f4cd18b",
+	database : "heroku_2ddbb6dcb252ea7"
+)
 
 
 var port = process.env.PORT || 8000
