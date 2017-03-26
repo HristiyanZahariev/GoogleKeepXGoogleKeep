@@ -1,0 +1,9 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "host":  "us-cdbr-iron-east-03.cleardb.net",
+    "user": "b8113da7ef3f58",
+    "database": "heroku_2ddbb6dcb252ea7",
+	"password": "2f4cd18b"
+  }
+}
