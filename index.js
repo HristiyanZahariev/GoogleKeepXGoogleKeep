@@ -2,17 +2,6 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql')
 
-app.get('/', function (req, res) {
-   res.send('Hello World');
-})
-
-var connection = mysql.createConnection({
-	host : 'us-cdbr-iron-east-03.cleardb.net',
-	user : 'b8113da7ef3f58',
-	password : '2f4cd18b',
-	database : 'heroku_2ddbb6dcb252ea7'
-})
-
 connection.connect(function(err) {
   if (err) throw err
   console.log('You are now connected...')
@@ -27,6 +16,21 @@ var server =  app.listen(port, function () {
    console.log("Example app listening at http://%s:%s", host, port)
 })
 
+
+app.get('/', function (req, res) {
+   res.send('Hello World');
+})
+
+
+/*
+var connection = mysql.createConnection({
+  host : 'us-cdbr-iron-east-03.cleardb.net',
+  user : 'b8113da7ef3f58',
+  password : '2f4cd18b',
+  database : 'heroku_2ddbb6dcb252ea7'
+})
+
+
 app.get('/users', function(request, response) {
     connection.query('SELECT * from users', function(err, rows, fields) {
         if (err) {
@@ -36,3 +40,4 @@ app.get('/users', function(request, response) {
         response.send(['Hello World!!!! HOLA MUNDO!!!!', rows]);
     });
 });
+*/
