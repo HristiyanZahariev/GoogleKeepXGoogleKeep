@@ -57,9 +57,13 @@ var User = sequelize.define('users', {
     id: {
       type: DataTypes.BIGINT(11),
       autoIncrement: true,
-      primaryKey: true},
-    name: DataTypes.STRING
-    // password: DataTypes.STRING
+      primaryKey: true
+    },
+    username: DataTypes.STRING,
+    password: DataTypes.STRING,
+    email: DataTypes.STRING,
+    first_name: DataTypes.STRING,
+    last_name: DataTypes.STRING
   }, {
     instanceMethods: {
       retrieveAll: function(onSuccess, onError) {
@@ -69,14 +73,22 @@ var User = sequelize.define('users', {
       User.find({where: {id: user_id}}, {raw: true}).success(onSuccess).error(onError);
     },
       add: function(onSuccess, onError) {
-      var name = this.name;
+      var username = this.username;
+      var password = this.password;
+      var email = this.email;
+      var first_name = this.first_name;
+      var second_name = this.second_name;
       // var password = this.password;
 
-      // var shasum = crypto.createHash('sha1');
-      // shasum.update(password);
-      // password = shasum.digest('hex');
+      var shasum = crypto.createHash('sha1');
+      shasum.update(password);
+      password = shasum.digest('hex');
 
-      User.build({ name: name })
+      User.build({ username: username,
+                   password: password,
+                   email: email,
+                   first_name: first_name,
+                   last_name: last_name })
           .save().success(onSuccess).error(onError);
      },
     updateById: function(user_id, onSuccess, onError) {
