@@ -67,17 +67,17 @@ var User = sequelize.define('users', {
   }, {
     instanceMethods: {
       retrieveAll: function(onSuccess, onError) {
-      User.findAll({}, {raw: true}).success(onSuccess).error(onError);
+      User.findAll({}, {raw: true}).then(onSuccess).error(onError);
     },
       retrieveById: function(user_id, onSuccess, onError) {
-      User.find({where: {id: user_id}}, {raw: true}).success(onSuccess).error(onError);
+      User.find({where: {id: user_id}}, {raw: true}).then(onSuccess).error(onError);
     },
       add: function(onSuccess, onError) {
       var username = this.username;
       var password = this.password;
       var email = this.email;
       var first_name = this.first_name;
-      var second_name = this.second_name;
+      var last_name = this.last_name;
       // var password = this.password;
 
       var shasum = crypto.createHash('sha1');
@@ -89,21 +89,24 @@ var User = sequelize.define('users', {
                    email: email,
                    first_name: first_name,
                    last_name: last_name })
-          .save().success(onSuccess).error(onError);
+          .save().then(onSuccess).error(onError);
      },
     updateById: function(user_id, onSuccess, onError) {
       var id = user_id;
       var username = this.username;
       var password = this.password;
+      var email = this.email;
+      var first_name = this.first_name;
+      var last_name = this.last_name;
 
       var shasum = crypto.createHash('sha1');
       shasum.update(password);
       password = shasum.digest('hex');
 
-      User.update({ username: username,password: password},{where: {id: id} }).success(onSuccess).error(onError);
+      User.update({ username: username,password: password, email: email, first_name: first_name, last_name: last_name},{where: {id: id} }).then(onSuccess).error(onError);
      },
       removeById: function(user_id, onSuccess, onError) {
-      User.destroy({where: {id: user_id}}).success(onSuccess).error(onError);
+      User.destroy({where: {id: user_id}}).then(onSuccess).error(onError);
     }
     }
   });
@@ -120,10 +123,14 @@ router.route('/users')
 // create a user (accessed at POST http://localhost:8080/api/users)
 .post(function(req, res) {
 
-  var name = req.body.name; //bodyParser does the magic
+  var username = req.body.username;
+  var password = req.body.password;
+  var email = req.body.email;
+  var first_name = req.body.first_name;
+  var last_name = req.body.last_name; //bodyParser does the magic
   // var password = req.body.password;
 
-  var user = User.build({ name: name });// password: password });
+  var user = User.build({ username: username, password: password, email: email, first_name: first_name, last_name: last_name });// password: password });
 
   user.add(function(success){
     res.json({ message: 'User created!' });
@@ -159,6 +166,9 @@ router.route('/users/:user_id')
 
   user.username = req.body.username;
   user.password = req.body.password;
+  user.email = req.body.email;
+  user.first_name = req.body.first_name;
+  user.last_name = req.body.last_name;
 
   user.updateById(req.params.user_id, function(success) {
     console.log(success);
