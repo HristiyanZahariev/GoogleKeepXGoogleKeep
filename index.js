@@ -55,9 +55,10 @@ var DataTypes = require("sequelize");
 
 var User = sequelize.define('users', {
     id: {
-      type: DataTypes.BIGINT(11),
+      type: Sequelize.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
+      omitNull: true
     },
     username: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -73,26 +74,25 @@ var User = sequelize.define('users', {
       User.find({where: {id: user_id}}, {raw: true}).then(onSuccess).error(onError);
     },
       add: function(onSuccess, onError) {
-      var username = this.username;
-      var password = this.password;
-      var email = this.email;
-      var first_name = this.first_name;
-      var last_name = this.last_name;
-      // var password = this.password;
+        var username = this.username;
+        var password = this.password;
+        var email = this.email;
+        var first_name = this.first_name;
+        var last_name = this.last_name;
+        // var password = this.password;
 
-      var shasum = crypto.createHash('sha1');
-      shasum.update(password);
-      password = shasum.digest('hex');
+        var shasum = crypto.createHash('sha1');
+        shasum.update(password);
+        password = shasum.digest('hex');
 
-      User.build({ username: username,
-                   password: password,
-                   email: email,
-                   first_name: first_name,
-                   last_name: last_name })
-          .save().then(onSuccess).error(onError);
-     },
+        User.build({ username: username,
+                     password: password,
+                     email: email,
+                     first_name: first_name,
+                     last_name: last_name })
+            .save().then(onSuccess).error(onError);
+       },
     updateById: function(user_id, onSuccess, onError) {
-      var id = user_id;
       var username = this.username;
       var password = this.password;
       var email = this.email;
