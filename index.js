@@ -55,16 +55,26 @@ var DataTypes = require("sequelize");
 
 var User = sequelize.define('users', {
     id: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       omitNull: true
     },
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    email: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING
+    username: {
+      type: DataTypes.STRING
+    },
+    password: {
+      type: DataTypes.STRING
+    },
+    email: {
+      type: DataTypes.STRING
+    },
+    first_name: {
+      type: DataTypes.STRING
+    },
+    last_name: {
+     type: DataTypes.STRING
+    }
   }, {
     instanceMethods: {
       retrieveAll: function(onSuccess, onError) {
