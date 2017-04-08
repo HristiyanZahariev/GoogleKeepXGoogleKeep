@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "DEBUG=express-sequelize nodemon bin/www"
   },
   "repository": {
     "type": "git",
@@ -29,8 +29,10 @@
   "homepage": "https://github.com/HristiyanZahariev/GoogleKeepXGoogleKeep#readme",
   "dependencies": {
     "express": "^4.15.2",
+    "morgan": "^1.8.1",
     "mysql": "^2.13.0",
-    "sequelize": "^3.30.3"
+    "sequelize": "^3.30.3",
+    "sequelize-cli": "^2.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
