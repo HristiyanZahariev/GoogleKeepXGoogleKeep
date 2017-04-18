@@ -1,43 +1,56 @@
 "use strict";
 
-var sequelize = require("./index.js");
+// var sequelize = require("./index.js");
 var Sequelize = require("sequelize");
+var User = require("./user");
 
-var Note = sequelize.define("notes", {
-	id: {
-     type: Sequelize.BIGINT(),
-     autoIncrement: true,
-     primaryKey: true,
-     field: 'id'
-    },
-   	title: {
-   		type: Sequelize.STRING(),
-   		field: 'title'
-   	},
-   	createdAt: {
-   		type: Sequelize.DATE(), //can be DATE()
-   		field: 'created_at'
-   	},
-   	reminder: {
-   		type: Sequelize.DATE(),
-   		field: 'reminder'
-   	},
-   	content: {
-   		type: Sequelize.STRING(),
-   		field: 'content'
-   	},
-   	contentType: {
-   		type: Sequelize.STRING(),
-   		field: 'content_type'
-   	}
-  }, {
-    freezeTableName: true // Model tableName will be the same as the model name
-  },{
-    classMethods: {
-        associate: function(models) {
-            Note.hasMany(models.User, {through: 'users_notes'});
-        }
-    }
- });
+var sequelize = new Sequelize('heroku_2ddbb6dcb252ea7', 'b8113da7ef3f58', '2f4cd18b', {
+  host: 'us-cdbr-iron-east-03.cleardb.net',
+  dialect: 'mysql',
+
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
+  define: {
+    timestamps: false
+  }
+
+});
+
+var Note = sequelize.define('notes', {
+  id: {
+   type: Sequelize.BIGINT(11),
+   autoIncrement: true,
+   primaryKey: true,
+   field: 'id'
+  },
+ 	title: {
+ 		type: Sequelize.STRING(),
+ 		field: 'title'
+ 	},
+ 	createdAt: {
+ 		type: Sequelize.DATE(), //can be DATE()
+ 		field: 'created_at'
+ 	},
+ 	reminder: {
+ 		type: Sequelize.DATE(),
+ 		field: 'reminder'
+ 	},
+ 	content: {
+ 		type: Sequelize.STRING(),
+ 		field: 'content'
+ 	},
+ 	contentType: {
+ 		type: Sequelize.STRING(),
+ 		field: 'content_type'
+ 	}
+}, {
+  freezeTableName: true // Model tableName will be the same as the model namere
+});
+
+// Note.belongsToMany(User, {through: 'user_notes'});
+
 
 module.exports = Note;

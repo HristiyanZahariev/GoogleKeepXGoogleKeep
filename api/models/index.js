@@ -3,8 +3,8 @@
 var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
-// var Note 	  = require("./note")
-// var User 	  = require("./user")
+var User      = require("./user");
+var Note      = require("./note");
 
 
 
@@ -23,8 +23,7 @@ var sequelize = new Sequelize('heroku_2ddbb6dcb252ea7', 'b8113da7ef3f58', '2f4cd
 
 });
 
-//Note.hasMany(User, {through: 'users_notes'});
-//User.hasMany(Note, {through: 'users_notes'});
+
 
 // var db = {};
 // fs
@@ -49,4 +48,4 @@ var sequelize = new Sequelize('heroku_2ddbb6dcb252ea7', 'b8113da7ef3f58', '2f4cd
 
 
 // module.exports = db;
-module.exports = sequelize; 
+module.exports = sequelize;

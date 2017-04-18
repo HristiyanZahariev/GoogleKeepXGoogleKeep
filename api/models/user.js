@@ -1,6 +1,7 @@
 "use strict";
 
 var sequelize = require("./index.js");
+var Note = require("./note");
 var Sequelize = require("sequelize");
 
 var User = sequelize.define('users', {
@@ -32,20 +33,25 @@ var User = sequelize.define('users', {
   }
 }, {
   freezeTableName: true // Model tableName will be the same as the model name
-},{
-  classMethods: {
-      associate: function(models) {
-          User.hasMany(models.Notes, {through: 'users_notes'});
-      }
-  },
-  instanceMethods: {
-    retrieveAll: function(onSuccess, onError) {
-       User.findAll().then(onSuccess).error(onError);
-    }
- }
+}
+// },{
+//   classMethods: {
+//       associate: function(models) {
+//           User.hasMany(models.Notes, {through: 'user_notes'});
+//       }
+//   },
+//   instanceMethods: {
+//     retrieveAll: function(onSuccess, onError) {
+//        User.findAll().then(onSuccess).error(onError);
+//     }
+//  }
 
 
 
-});
+);
+
+
+User.belongsToMany(Note, {through: 'user_notes'});
+
 
 module.exports = User;
