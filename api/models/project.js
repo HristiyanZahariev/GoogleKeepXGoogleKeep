@@ -2,6 +2,7 @@
 
 var sequelize = require("./index.js");
 var Sequelize = require("sequelize");
+var Note = require("./note");
 
 var Project = sequelize.define('project', {
   id: {
@@ -27,5 +28,7 @@ var Project = sequelize.define('project', {
    field: 'type'
   }
 });
+
+Project.hasMany(Note, {as: 'notes'});
 
 module.exports = Project;

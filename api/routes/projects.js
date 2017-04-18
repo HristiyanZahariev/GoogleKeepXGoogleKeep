@@ -8,7 +8,10 @@ router.post('/create', function(req, res) {
     name: req.body.name,
     color: req.body.color,
     description: req.body.description,
-    type: req.body.type
+    type: req.body.type,
+    notes: [
+    	{title: "hello"}
+    ]
   }).then(function() {
     res.redirect('/');
   });
