@@ -1,25 +1,25 @@
 "use strict";
 
-// var sequelize = require("./index.js");
+var sequelize = require("./index.js");
 var Sequelize = require("sequelize");
 var User = require("./user");
 
-var sequelize = new Sequelize('heroku_2ddbb6dcb252ea7', 'b8113da7ef3f58', '2f4cd18b', {
-  host: 'us-cdbr-iron-east-03.cleardb.net',
-  dialect: 'mysql',
+// var sequelize = new Sequelize('heroku_2ddbb6dcb252ea7', 'b8113da7ef3f58', '2f4cd18b', {
+//   host: 'us-cdbr-iron-east-03.cleardb.net',
+//   dialect: 'mysql',
 
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-  define: {
-    timestamps: false
-  }
+//   pool: {
+//     max: 5,
+//     min: 0,
+//     idle: 10000
+//   },
+//   define: {
+//     timestamps: false
+//   }
 
-});
+// });
 
-var Note = sequelize.define('notes', {
+var Note = sequelize.define('note', {
   id: {
    type: Sequelize.BIGINT(11),
    autoIncrement: true,
