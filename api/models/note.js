@@ -5,7 +5,7 @@ var Sequelize = require("sequelize");
 
 var Note = sequelize.define("notes", {
 	id: {
-     type: Sequelize.BIGINT(11),
+     type: Sequelize.BIGINT(),
      autoIncrement: true,
      primaryKey: true,
      field: 'id'
@@ -35,7 +35,7 @@ var Note = sequelize.define("notes", {
   },{
     classMethods: {
         associate: function(models) {
-            Note.hasMany(models.User, {through: 'user_notes'});
+            Note.hasMany(models.User, {through: 'users_notes'});
         }
     }
  });

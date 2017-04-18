@@ -35,7 +35,7 @@ var User = sequelize.define('users', {
 },{
   classMethods: {
       associate: function(models) {
-          User.hasMany(models.Notes, {through: 'user_notes'});
+          User.hasMany(models.Notes, {through: 'users_notes'});
       }
   },
   instanceMethods: {

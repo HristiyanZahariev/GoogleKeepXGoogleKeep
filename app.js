@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var routes = require('./api/routes/index');
 var users  = require('./api/routes/users');
 var notes  = require('./api/routes/notes');
+var project = require('./api/routes/projects')
 
 var app = express();
 
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/notes', notes);
+app.use('/projects', project);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
