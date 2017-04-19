@@ -28,10 +28,15 @@ var Project = sequelize.define('project', {
    type: Sequelize.STRING(),
    field: 'type'
   }
+},{
+    classMethods:{
+      associate: function(){
+        Project.belongsToMany(User, {through: 'user_projects'});
+      }
+    }
 });
 
 Project.hasMany(Note, {as: 'notes'});
-Project.belongsToMany(User, {through: 'user_projects'});
 
 
 module.exports = Project;

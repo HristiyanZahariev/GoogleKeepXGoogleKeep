@@ -32,8 +32,6 @@ var User = sequelize.define('users', {
    type: Sequelize.STRING(),
    field: 'last_name'
   }
-}, {
-  freezeTableName: true // Model tableName will be the same as the model name
 }
 // },{
 //   classMethods: {
@@ -54,6 +52,8 @@ var User = sequelize.define('users', {
 // {foreignKey: {name : "note_id", allowNull:false},
 User.belongsToMany(Note, {through: 'user_notes'});
 User.belongsToMany(Project, {through: 'user_projects'});
+Project.belongsToMany(User, {through: 'user_projects'});
+
 
 
 module.exports = User;
