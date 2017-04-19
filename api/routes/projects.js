@@ -62,15 +62,26 @@ router.post('/:project_id/addUser/:user_id', function(req, res){
     req.params.project_id,
     {include: [{model: User, as: "users"}]})
   .then(function(project){
-    var users = project.getUsers();
-    res.send(users);
+    project.getUsers().then(function(users){
+      // users1.forEach(function(u){
+      //   console.log("\n USER: " + u + "\t" + typeof u.getUsername()) ;
+      // })
+
+      User.findById(req.params.user_id).then(function(user){
+        users.push(user);
+        project.setUsers(users);
+      });
+
+    });
+
+    res.send("ge");
   });
 });
 
 router.get('/:project_id', function(req, res){
   project.findById(
     req.params.project_id, 
-    {include: [{model: Note, as: "notes"}]})
+    {include: [{model: Note, as: "notes"},{model: User, as: "users"}]})
   .then(function(project){
     res.send(project);
   });
