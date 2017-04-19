@@ -33,8 +33,16 @@
     "mysql": "^2.13.0",
     "sequelize": "^3.30.3",
     "sequelize-cli": "^2.7.0",
-    "passport": "0.3.2",
-    "passport-local": "1.0.0"
+    "passport" : "~0.1.17",         
+    "passport-local" : "~0.1.6",    
+    "passport-facebook" : "~1.0.2", 
+    "passport-twitter" : "~1.0.2",  
+    "passport-google-oauth" : "~0.1.5",
+    "connect-flash" : "~0.1.1",     
+    "bcrypt-nodejs" : "latest",
+    "cookie-parser": "~1.0.0",
+    "method-override": "~1.0.0",
+    "express-session": "~1.0.0"   
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
