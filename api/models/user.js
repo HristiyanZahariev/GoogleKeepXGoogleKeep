@@ -3,6 +3,7 @@
 var sequelize = require("./index.js");
 var Note = require("./note");
 var Project = require("./project");
+
 var Sequelize = require("sequelize");
 
 var User = sequelize.define('users', {
