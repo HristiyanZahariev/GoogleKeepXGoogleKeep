@@ -51,6 +51,7 @@ var Note = sequelize.define('note', {
 });
 
 // Note.belongsToMany(User, {through: 'user_notes'});
+// Note.belongsToMany(User, {foreignKey: {name : "user_id", allowNull: false},through: 'user_notes'});
 
 
 module.exports = Note;

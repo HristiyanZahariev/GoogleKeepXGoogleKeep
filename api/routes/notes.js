@@ -9,10 +9,17 @@ router.post('/create', function(req, res) {
     createdAt: req.body.createdAt,
     reminder: req.body.reminder,
     content: req.body.content,
-    contentType: req.body.contentType
+    contentType: req.body.contentType,
+    projectId: req.body.projectId
   }).then(function() {
     res.redirect('/');
   });
+});
+
+router.get('/', function(req, res){
+	note.findAll().then(function(users){
+		res.send(users);
+	});
 });
 
 module.exports = router;
