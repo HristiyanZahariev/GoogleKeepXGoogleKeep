@@ -2,6 +2,8 @@
 
 var sequelize = require("./index.js");
 var Sequelize = require("sequelize");
+var Note = require("./note");
+var User = require("./user")
 
 var Project = sequelize.define('project', {
   id: {
@@ -26,6 +28,15 @@ var Project = sequelize.define('project', {
    type: Sequelize.STRING(),
    field: 'type'
   }
+},{
+    classMethods:{
+      associate: function(){
+        Project.belongsToMany(User, {through: 'user_projects'});
+      }
+    }
 });
+
+Project.hasMany(Note, {as: 'notes'});
+
 
 module.exports = Project;
