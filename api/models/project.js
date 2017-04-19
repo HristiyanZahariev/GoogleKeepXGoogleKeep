@@ -3,6 +3,7 @@
 var sequelize = require("./index.js");
 var Sequelize = require("sequelize");
 var Note = require("./note");
+var User = require("./user")
 
 var Project = sequelize.define('project', {
   id: {
@@ -30,5 +31,7 @@ var Project = sequelize.define('project', {
 });
 
 Project.hasMany(Note, {as: 'notes'});
+Project.belongsToMany(User, {through: 'user_projects'});
+
 
 module.exports = Project;
