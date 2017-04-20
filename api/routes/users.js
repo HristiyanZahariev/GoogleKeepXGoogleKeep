@@ -60,6 +60,7 @@ router.post("/login", function(req, res) {
     }
 });
 
+//Basic request header for authentication: Authorization: JWT JSON_WEB_TOKEN_STRING.....
 router.get("/user", auth.authenticate(), function(req, res) {  
     res.json("kur za lozkata")
 });
