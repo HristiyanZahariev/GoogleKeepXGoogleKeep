@@ -60,12 +60,9 @@ router.post('/:project_id/addNote', function(req, res){
 router.post('/:project_id/addUser/:user_id', function(req, res){
   project.findById(
     req.params.project_id,
-    {include: [{model: User, as: "users"}]})
+    {include: [{model: User, as: "users"}, {model: Note, as: "notes"}]})
   .then(function(project){
     project.getUsers().then(function(users){
-      // users1.forEach(function(u){
-      //   console.log("\n USER: " + u + "\t" + typeof u.getUsername()) ;
-      // })
 
       User.findById(req.params.user_id).then(function(user){
         users.push(user);
@@ -74,7 +71,7 @@ router.post('/:project_id/addUser/:user_id', function(req, res){
 
     });
 
-    res.send("ge");
+    res.reminder('projects/' + req.params.project_id);
   });
 });
 
