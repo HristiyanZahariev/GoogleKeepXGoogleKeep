@@ -34,6 +34,8 @@ var User = sequelize.define('users', {
    field: 'last_name'
   }
 }
+<<<<<<< HEAD
+=======
 ,{
   classMethods: {
       associate: function(models) {
@@ -48,11 +50,13 @@ var User = sequelize.define('users', {
 }
 
 
+>>>>>>> 59f55f21102771b8be7e9b7c0d1c88a7738454c9
 
 );
 
-// {foreignKey: {name : "note_id", allowNull:false},
 User.belongsToMany(Note, {through: 'user_notes'});
+Note.belongsToMany(User, {through: 'user_notes'});
+
 User.belongsToMany(Project, {through: 'user_projects'});
 Project.belongsToMany(User, {through: 'user_projects'});
 
