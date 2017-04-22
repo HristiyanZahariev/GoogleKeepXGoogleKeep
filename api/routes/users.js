@@ -42,10 +42,10 @@ router.post("/login", function(req, res) {
     if( ! user ){
       res.status(401).json({message:"no such user found"});
     }
-    console.log(userx.password)
+    console.log(user.password)
     console.log(hashedPass)
 
-    bcrypt.compare(req.body.password, userx.password, function(err, response) { 
+    bcrypt.compare(req.body.password, user.password, function(err, response) { 
       // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
       console.log(user.id)
       var payload = {id: user.id};

@@ -34,8 +34,6 @@ var User = sequelize.define('users', {
    field: 'last_name'
   }
 }
-<<<<<<< HEAD
-=======
 ,{
   classMethods: {
       associate: function(models) {
@@ -49,8 +47,6 @@ var User = sequelize.define('users', {
  }
 }
 
-
->>>>>>> 59f55f21102771b8be7e9b7c0d1c88a7738454c9
 
 );
 
