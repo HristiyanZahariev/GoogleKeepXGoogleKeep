@@ -34,6 +34,23 @@ var User = sequelize.define('users', {
    field: 'last_name'
   }
 }
+<<<<<<< HEAD
+=======
+,{
+  classMethods: {
+      associate: function(models) {
+          User.hasMany(models.Notes, {through: 'user_notes'});
+      }
+  },
+  instanceMethods: {
+    retrieveAll: function(onSuccess, onError) {
+       User.findAll().then(onSuccess).error(onError);
+    }
+ }
+}
+
+
+>>>>>>> 59f55f21102771b8be7e9b7c0d1c88a7738454c9
 
 );
 
