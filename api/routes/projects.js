@@ -4,40 +4,28 @@ var router  = express.Router();
 var project = require('../models/project');
 var Note = require('../models/note');
 var User = require('../models/user')
+var auth = require('./../config/auth')();
 
 
-router.post('/create', function(req, res) {
-  project.create({
+router.post('/create', auth.authenticate(), function(req, res) {  
+  	project.create({
     name: req.body.name,
     color: req.body.color,
     description: req.body.description,
-    type: req.body.type,
-    notes: [
-    	{title: "hello"}
-    ]
-  }).then(function() {
-    res.redirect('/');
-  });
+    type: req.body.type
+ 	}).then(function(project) {
+  		project.getUsers().then(function(users) {
+  			User.findById(req.user.id).then(function(user) {
+  				users.push(user)
+  				project.setUsers(users);
+  			});
+  			res.redirect("/projects/" + project.id)
+  		});
+  	});
 });
 
 
-
-router.post('/create', function(req, res) {
-  project.create({
-    name: req.body.name,
-    color: req.body.color,
-    description: req.body.description,
-    type: req.body.type,
-    notes: [
-      {title: "hello"}
-    ]
-  }).then(function() {
-    res.redirect('/');
-  });
-});
-
-
-router.post('/:project_id/addNote', function(req, res){
+router.post('/:project_id/addNote', auth.authenticate(), function(req, res) {
   project.findById(
     req.params.project_id, 
     {include: [{model: Note, as: "notes"}]})
@@ -57,13 +45,13 @@ router.post('/:project_id/addNote', function(req, res){
   });
 });
 
-router.post('/:project_id/addUser/:user_id', function(req, res){
+router.post('/:project_id/addUser/:user_id',auth.authenticate(), function(req, res) {
   project.findById(
     req.params.project_id,
     {include: [{model: User, as: "users"}, {model: Note, as: "notes"}]})
   .then(function(project){
     project.getUsers().then(function(users){
-
+    
       User.findById(req.params.user_id).then(function(user){
         users.push(user);
         project.setUsers(users);

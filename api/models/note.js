@@ -45,6 +45,10 @@ var Note = sequelize.define('note', {
  	contentType: {
  		type: Sequelize.STRING(),
  		field: 'content_type'
+ 	},
+ 	archived: {
+ 		type: Sequelize.BOOLEAN(),
+ 		field: 'archived'
  	}
 }, {
   freezeTableName: true // Model tableName will be the same as the model namere
