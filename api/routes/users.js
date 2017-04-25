@@ -12,6 +12,7 @@ var auth = require('./../config/auth')();
 var jwt = require('jsonwebtoken');
 var cfg = require("../config/config");
 var bcrypt = require('bcrypt-nodejs');
+var Note = require('../models/note')
 
 router.post('/create', function(req, res) {
   hashedPass = bcrypt.hashSync(req.body.password)
@@ -23,6 +24,12 @@ router.post('/create', function(req, res) {
     lastName: req.body.lastName
   }).then(function() {
     res.redirect('/');
+  });
+});
+
+router.get('/', function(req, res){
+  users.findAll({include: [{model: Note, as: "notes"}]}).then(function(user){
+    res.send(user);
   });
 });
 

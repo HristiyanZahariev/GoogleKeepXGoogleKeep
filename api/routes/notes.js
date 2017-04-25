@@ -64,13 +64,34 @@ router.get('/archive/:note_id', auth.authenticate(), function(req, res) {
 		note.update ({
   			archived: true
 		}).then(function() {
-			 			res.json("archived");
+			res.json("archived");
 		})
 	});
 });
 
+
+//worst route eu but its fucked up
+router.get('/all/archived', auth.authenticate(), function(req, res) { 
+	Note.findAll(
+		{ where: 
+			{ archived: true }
+		}).then(function(notes) {
+			res.send(notes)
+		}
+	);
+});
+
+router.delete('/:note_id', function(req, res) {
+	Note.destroy({ where: { id: req.params.note_id }}).then(function(note) {
+		res.json("deleted");
+	});
+})
+
 router.get('/', function(req, res){
-	Note.findAll().then(function(notes){
+	Note.findAll({include: [{model: User, as: "users"}]}).then(function(notes) {
+		notes.forEach(function(note) {
+			console.log(note.archived)
+		});
 		res.send(notes);
 	});
 });
