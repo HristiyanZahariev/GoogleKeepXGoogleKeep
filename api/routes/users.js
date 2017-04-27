@@ -33,6 +33,16 @@ router.get('/', function(req, res){
   });
 });
 
+//Can get all notes that user has
+router.get('/:user_id/notes', function(req, res) {
+  users.findById(
+    req.params.user_id,
+    {include: [{model: Note, as: "notes"}]})
+  .then(function(user){
+    res.send(user.notes);
+  });
+})
+
 router.post("/login", function(req, res) {
   hashedPass = bcrypt.hashSync(req.body.password)
   if(req.body.username && req.body.password){
