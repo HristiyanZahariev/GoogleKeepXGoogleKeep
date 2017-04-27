@@ -24,8 +24,23 @@ router.post('/create', auth.authenticate(), function(req, res) {
   	});
 });
 
+router.post('/:project_id/user', auth.authenticate(), function(req, res) {
+  project.findById(
+    req.params.project_id, 
+    {include: [{model: User, as: "users"}]})
+  .then(function(project){
+    project.getUsers().then(function(users) {
+     User.findOne({ where: {username: req.body.username} }).then(function(user) {
+        users.push(user);
+        project.setUsers(users);
+      });
+ 	});
+  });
+});
 
-router.post('/:project_id/addNote', auth.authenticate(), function(req, res) {
+//adding note to a project by creating it with json on the body
+
+router.post('/:project_id/note', auth.authenticate(), function(req, res) {
   project.findById(
     req.params.project_id, 
     {include: [{model: Note, as: "notes"}]})
@@ -45,7 +60,27 @@ router.post('/:project_id/addNote', auth.authenticate(), function(req, res) {
   });
 });
 
-router.post('/:project_id/addUser/:user_id',auth.authenticate(), function(req, res) {
+//Adding note to a project with param note id
+
+router.post('/:project_id/notes/:note_id', auth.authenticate(), function(req, res) {
+  project.findById(
+    req.params.project_id, 
+    {include: [{model: Note, as: "notes"}]})
+  .then(function(project){
+    project.getNotes().then(function(notes){
+    
+      Note.findById(req.params.note_id).then(function(note){
+        notes.push(note);
+        project.setNotes(notes);
+      });
+
+    });
+
+    res.send("success");
+  });
+});
+
+router.post('/:project_id/users/:user_id',auth.authenticate(), function(req, res) {
   project.findById(
     req.params.project_id,
     {include: [{model: User, as: "users"}, {model: Note, as: "notes"}]})
@@ -69,6 +104,15 @@ router.get('/:project_id', function(req, res){
     {include: [{model: Note, as: "notes"},{model: User, as: "users"}]})
   .then(function(project){
     res.send(project);
+  });
+});
+
+router.get('/:project_id/notes', function(req, res){
+  project.findById(
+    req.params.project_id, 
+    {include: [{model: Note, as: "notes"},{model: User, as: "users"}]})
+  .then(function(project){
+    res.send(project.notes);
   });
 });
 

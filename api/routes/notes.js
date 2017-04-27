@@ -49,6 +49,21 @@ router.post('/:note_id/users/:user_id', function(req, res){
   });
 });
 
+router.post('/:note_id/users', auth.authenticate(), function(req, res) {
+  Note.findById(
+    req.params.note_id, 
+    {include: [{model: User, as: "users"}]})
+  .then(function(notes){
+    notes.getUsers().then(function(users) {
+     User.findOne({ where: {username: req.body.username} }).then(function(user) {
+        users.push(user);
+        notes.setUsers(users);
+      });
+ 	});
+ 	res.send("success")
+  });
+});
+
 router.get('/:note_id', function(req, res){
   Note.findById(
     req.params.note_id,

@@ -13,6 +13,7 @@ var jwt = require('jsonwebtoken');
 var cfg = require("../config/config");
 var bcrypt = require('bcrypt-nodejs');
 var Note = require('../models/note')
+var Project = require('../models/project')
 
 router.post('/create', function(req, res) {
   hashedPass = bcrypt.hashSync(req.body.password)
@@ -33,6 +34,35 @@ router.get('/', function(req, res){
   });
 });
 
+//Get current user's notes
+router.get("/notes", auth.authenticate(), function(req, res) {  
+  console.log(req.user.id)
+    users.findOne(
+        {
+          include: [{model: Note, as: "notes"}],
+          where: {
+            id: req.user.id
+          }
+        }
+      ).then(function(user){
+      res.send(user.notes);
+    })
+});
+
+router.get("/projects", auth.authenticate(), function(req, res) {  
+  console.log(req.user.id)
+    users.findOne(
+        {
+          include: [{model: Project, as: "projects"}],
+          where: {
+            id: req.user.id
+          }
+        }
+      ).then(function(user){
+      res.send(user.projects);
+    })
+});
+
 //Can get all notes that user has
 router.get('/:user_id/notes', function(req, res) {
   users.findById(
@@ -42,6 +72,16 @@ router.get('/:user_id/notes', function(req, res) {
     res.send(user.notes);
   });
 })
+
+router.get('/:user_id/projects', function(req, res) {
+  users.findById(
+    req.params.user_id,
+    {include: [{model: Project, as: "projects"}]})
+  .then(function(user) {
+    res.send(user.projects)
+  });
+})
+
 
 router.post("/login", function(req, res) {
   hashedPass = bcrypt.hashSync(req.body.password)
