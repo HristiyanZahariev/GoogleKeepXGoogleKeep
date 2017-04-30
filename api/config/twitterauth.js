@@ -10,7 +10,7 @@ passport.use(new TwitterStrategy({
     consumerSecret: config.twitter.consumerSecret,
     callbackURL: config.twitter.callbackURL
   }, function(token, tokenSecret, profile, done) {
-    User.findOrCreate({ twitterId: profile.id }, function (error, user) {
+    User.findOrCreate({ where: { twitterId: profile.id }}, function (error, user) {
       return done(error, user);
     });
   }
