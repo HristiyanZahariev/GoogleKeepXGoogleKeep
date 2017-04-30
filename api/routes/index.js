@@ -88,15 +88,15 @@ router.get('/', function(req, res, next) {
 });
 
 
-// var passportTwitter = require('../config/twitterauth.js');
-// router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
+var passport = require('passport');
+router.get('/auth/twitter', passport.authenticate('twitter'));
 
-// router.get('/auth/twitter/callback', passportTwitter.authenticate('twitter', {
-//     failureRedirect: '/login'
-// }), function(req, res) {
-//     console.log('callback')
-//         // Successful authentication, redirect home.
-//     res.redirect('/');
-// });
+router.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    failureRedirect: '/login'
+}), function(req, res) {
+    console.log('callback')
+        // Successful authentication, redirect home.
+    res.redirect('/');
+});
 
 module.exports = router;
