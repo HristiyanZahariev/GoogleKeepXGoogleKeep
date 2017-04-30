@@ -89,9 +89,9 @@ router.get('/', function(req, res, next) {
 
 
 var passport = require('passport');
-router.get('/auth/twitter', passport.authenticate('twitter'));
+router.get('/auth/twitter', passport.authenticate('passport-twitter'));
 
-router.get('/auth/twitter/callback', passport.authenticate('twitter', {
+router.get('/auth/twitter/callback', passport.authenticate('passport-twitter', {
     failureRedirect: '/login'
 }), function(req, res) {
     console.log('callback')
