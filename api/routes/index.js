@@ -88,7 +88,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-var passport = require('passport');
+var passport = require('passport-twitter');
 router.get('/auth/twitter', passport.authenticate('passport-twitter'));
 
 router.get('/auth/twitter/callback', passport.authenticate('passport-twitter', {
