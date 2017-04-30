@@ -37,12 +37,12 @@ router.post('/register', function(req, res) {
   }).catch(Sequelize.ValidationError, function (err) {
       // respond with validation errors
       if (err.message == "Validation error: [object SequelizeInstance:users]") {
-        return res.status(401).send("Username must be unique")
+        return res.status(401).json("Username must be unique")
       }
-      return res.status(401).send(err.message);
+      return res.status(401).json(err.message);
       }).catch(function (err) {
           // every other error
-          return res.status(400).send({
+          return res.status(400).json({
               message: err.message
           });
       });
@@ -79,12 +79,12 @@ router.post("/login", function(req, res) {
 
 // router.get('/', function(req, res) {
 // 	User.findAll().then(function(users){
-// 		res.send(users);
+// 		res.json(users);
 // 	});
 // });
 
 router.get('/', function(req, res, next) {
-  res.send("hello")
+  res.json("hello")
 });
 
 var passportTwitter = require('../config/twitterauth.js');

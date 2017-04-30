@@ -18,7 +18,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
   				users.push(user)
   				project.setUsers(users);
   			});
-  			res.send("success")
+  			res.json("success")
   		});
   	});
 });
@@ -55,7 +55,7 @@ router.post('/:project_id/note', auth.authenticate(), function(req, res) {
     }).then(function() {
       res.redirect('/projects/' + req.params.project_id);
     });
-    // res.send(project);
+    // res.json(project);
   });
 });
 
@@ -75,7 +75,7 @@ router.post('/:project_id/notes/:note_id', auth.authenticate(), function(req, re
 
     });
 
-    res.send("success");
+    res.json("success");
   });
 });
 
@@ -89,7 +89,7 @@ router.get("/", auth.authenticate(), function(req, res) {
           }
         }
       ).then(function(user){
-      res.send(user.projects);
+      res.json(user.projects);
     })
 });
 
@@ -116,7 +116,7 @@ router.get('/:project_id', function(req, res){
     req.params.project_id, 
     {include: [{model: Note, as: "notes"},{model: User, as: "users"}]})
   .then(function(project){
-    res.send(project);
+    res.json(project);
   });
 });
 
@@ -125,7 +125,7 @@ router.get('/:project_id/notes', function(req, res){
     req.params.project_id, 
     {include: [{model: Note, as: "notes"},{model: User, as: "users"}]})
   .then(function(project){
-    res.send(project.notes);
+    res.json(project.notes);
   });
 });
 

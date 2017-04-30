@@ -18,7 +18,7 @@ var Project = require('../models/project')
 
 router.get('/', function(req, res){
   users.findAll({include: [{model: Note, as: "notes"}]}).then(function(user){
-    res.send(user);
+    res.json(user);
   });
 });
 
@@ -28,7 +28,7 @@ router.get('/:user_id/notes', function(req, res) {
     req.params.user_id,
     {include: [{model: Note, as: "notes"}]})
   .then(function(user){
-    res.send(user.notes);
+    res.json(user.notes);
   });
 })
 
@@ -37,7 +37,7 @@ router.get('/:user_id/projects', function(req, res) {
     req.params.user_id,
     {include: [{model: Project, as: "projects"}]})
   .then(function(user) {
-    res.send(user.projects)
+    res.json(user.projects)
   });
 })
 

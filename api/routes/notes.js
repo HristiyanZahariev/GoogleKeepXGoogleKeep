@@ -19,7 +19,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
       User.findById(req.user.id).then(function(user){
         users.push(user);
         note.setUsers(users);
-        res.send("success")
+        res.json("success")
       });
     });
     });
@@ -31,7 +31,7 @@ router.get('/:note_id/users', function(req, res){
     req.params.note_id,
     {include: [{model: User, as: "users"}]})
   .then(function(note){
-      res.send(note);
+      res.json(note);
   });
 });
 
@@ -60,7 +60,7 @@ router.post('/:note_id/users', auth.authenticate(), function(req, res) {
         notes.setUsers(users);
       });
   });
-  res.send("success")
+  res.json("success")
   });
 });
 
@@ -69,7 +69,7 @@ router.get('/:note_id', function(req, res){
     req.params.note_id,
     {include: [{model: User, as: "users"}]})
   .then(function(note){
-    res.send(note);
+    res.json(note);
   });
 })
 
@@ -95,12 +95,17 @@ router.get('/all/archived', auth.authenticate(), function(req, res) {
           }
         }
       ).then(function(user) {
-        user.getNotes().then(function(note) {
-          note.findAll({where: {archived: true}}).then(function(archived) {
-            res.send(archived)
+        user.getNotes().then(function(notes) {
+          var archivedNotes = []
+          notes.forEach(function(note) {
+            console.log(note.archived)
+            if (note.archived == true) {
+              archivedNotes.push(note)
+            }
+            res.json(archivedNotes)
           })
-        });  
-      })
+        });
+      })   
 });
 
 router.delete('/:note_id', function(req, res) {
@@ -119,7 +124,7 @@ router.get("/", auth.authenticate(), function(req, res) {
           }
         }
       ).then(function(user){
-      res.send(user.notes);
+      res.json(user.notes);
     })
 });
 
