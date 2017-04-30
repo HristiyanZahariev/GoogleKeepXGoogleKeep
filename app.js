@@ -16,7 +16,6 @@ var notes  = require('./api/routes/notes');
 var project = require('./api/routes/projects')
 
 var User = require('./api/models/user');
-var swig = require('swig');
 var app = express();
 
 
@@ -48,13 +47,6 @@ app.use('/users', users);
 app.use('/notes', notes);
 app.use('/projects', project);
 
-// *** view engine *** //
-var swig = new swig.Swig();
-app.engine('html', swig.renderFile);
-app.set('view engine', 'html');
-
-// *** static directory *** //
-app.set('views', path.join(__dirname, 'views'));
 
 // passport.use(new LocalStrategy(function(username, pass, cb){
 //   var hashedPass = bcrypt.hashSync(pass)

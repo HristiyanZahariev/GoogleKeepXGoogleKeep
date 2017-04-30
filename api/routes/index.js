@@ -77,19 +77,11 @@ router.get('/', function(req, res, next) {
   res.render('twitter', { title: 'Express' });
 });
 
-<<<<<<< HEAD
 var passportTwitter = require('../config/twitterauth.js');
-
-router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
-
-router.get('/auth/twitter/callback',
-  passportTwitter.authenticate('twitter', { failureRedirect: '/login' }),
-=======
 router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
 
 router.get('/auth/twitter/callback',
   passportTwitter.authenticate('twitter'),
->>>>>>> twitter
   function(req, res) {
     // Successful authentication
     res.json(req.user);
