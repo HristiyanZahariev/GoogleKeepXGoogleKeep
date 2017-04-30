@@ -11,15 +11,14 @@ router.post('/create', auth.authenticate(), function(req, res) {
   	project.create({
     name: req.body.name,
     color: req.body.color,
-    description: req.body.description,
-    type: req.body.type
+    description: req.body.description
  	}).then(function(project) {
   		project.getUsers().then(function(users) {
   			User.findById(req.user.id).then(function(user) {
   				users.push(user)
   				project.setUsers(users);
   			});
-  			res.redirect("/projects/" + project.id)
+  			res.send("success")
   		});
   	});
 });

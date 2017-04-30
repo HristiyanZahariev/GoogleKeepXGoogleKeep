@@ -16,30 +16,29 @@ var Note = require('../models/note')
 var Sequelize = require('sequelize')
 var Project = require('../models/project')
 
-router.post('/create', function(req, res) {
-  hashedPass = bcrypt.hashSync(req.body.password)
-  users.create({
-    username: req.body.username,
-    password: hashedPass,
-    email: req.body.email,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName
-  }).then(function(user) {
-    res.send("success")
-  })       .catch(Sequelize.ValidationError, function (err) {
-            // respond with validation errors
-            if (err.message == "Validation error: [object SequelizeInstance:users]") {
-              return res.status(401).send("Username must be unique")
-            }
-            return res.status(401).send(err.message);
-        })
-        .catch(function (err) {
-            // every other error
-            return res.status(400).send({
-                message: err.message
-            });
-        });
-});
+// router.post('/create', function(req, res) {
+//   hashedPass = bcrypt.hashSync(req.body.password)
+//   users.create({
+//     username: req.body.username,
+//     password: hashedPass,
+//     email: req.body.email,
+//     firstName: req.body.firstName,
+//     lastName: req.body.lastName
+//   }).then(function(user) {
+//     res.send("success")
+//   }).catch(Sequelize.ValidationError, function (err) {
+//       // respond with validation errors
+//       if (err.message == "Validation error: [object SequelizeInstance:users]") {
+//         return res.status(401).send("Username must be unique")
+//       }
+//       return res.status(401).send(err.message);
+//       }).catch(function (err) {
+//           // every other error
+//           return res.status(400).send({
+//               message: err.message
+//           });
+//       });
+// });
 
 router.get('/', function(req, res){
   users.findAll({include: [{model: Note, as: "notes"}]}).then(function(user){
@@ -96,34 +95,34 @@ router.get('/:user_id/projects', function(req, res) {
 })
 
 
-router.post("/login", function(req, res) {
-  hashedPass = bcrypt.hashSync(req.body.password)
-  if(req.body.username && req.body.password){
-    var username = req.body.username;
-    var password = req.body.password;
-  }
-  // usually this would be a database call:
-  users.findOne({
-    where: {
-      username: username
-    }
-  }).then(function(user) {
-    console.log(user)
-    if( ! user ){
-      res.status(401).json({message:"no such user found"});
-    }
-    console.log(user.password)
-    console.log(hashedPass)
+// router.post("/login", function(req, res) {
+//   hashedPass = bcrypt.hashSync(req.body.password)
+//   if(req.body.username && req.body.password){
+//     var username = req.body.username;
+//     var password = req.body.password;
+//   }
+//   // usually this would be a database call:
+//   users.findOne({
+//     where: {
+//       username: username
+//     }
+//   }).then(function(user) {
+//     console.log(user)
+//     if( ! user ){
+//       res.status(401).json({message:"no such user found"});
+//     }
+//     console.log(user.password)
+//     console.log(hashedPass)
 
-    bcrypt.compare(req.body.password, user.password, function(err, response) { 
-      // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-      console.log(user.id)
-      var payload = {id: user.id};
-      var token = jwt.sign(payload, cfg.jwtSecret);
-      res.json({message: "ok", token: token});
-    });
-  });
-})
+//     bcrypt.compare(req.body.password, user.password, function(err, response) { 
+//       // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
+//       console.log(user.id)
+//       var payload = {id: user.id};
+//       var token = jwt.sign(payload, cfg.jwtSecret);
+//       res.json({message: "ok", token: token});
+//     });
+//   });
+// })
 
 //Basic request header for authentication: Authorization: JWT JSON_WEB_TOKEN_STRING.....
 router.get("/currentuser", auth.authenticate(), function(req, res) {  

@@ -23,10 +23,6 @@ var Project = sequelize.define('project', {
   description: {
    type: Sequelize.STRING(),
    field: 'description'
-  },
-  type: {
-   type: Sequelize.STRING(),
-   field: 'type'
   }
 },{
     classMethods:{

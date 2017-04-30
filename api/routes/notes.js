@@ -19,7 +19,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
       User.findById(req.user.id).then(function(user){
         users.push(user);
         note.setUsers(users);
-        res.redirect("/notes/" + note.id)
+        res.send("success")
       });
   	});
     });
@@ -106,6 +106,7 @@ router.get('/', function(req, res){
 	Note.findAll({include: [{model: User, as: "users"}]}).then(function(notes) {
 		notes.forEach(function(note) {
 			console.log(note.archived)
+      res.sned(note.status.rawAttributes)
 		});
 		res.send(notes);
 	});
