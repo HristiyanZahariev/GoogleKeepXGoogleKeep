@@ -102,14 +102,18 @@ router.delete('/:note_id', function(req, res) {
 	});
 })
 
-router.get('/', function(req, res){
-	Note.findAll({include: [{model: User, as: "users"}]}).then(function(notes) {
-		notes.forEach(function(note) {
-			console.log(note.archived)
-      res.sned(note.status.rawAttributes)
-		});
-		res.send(notes);
-	});
+router.get("/", auth.authenticate(), function(req, res) {  
+  console.log(req.user.id)
+    User.findOne(
+        {
+          include: [{model: Note, as: "notes"}],
+          where: {
+            id: req.user.id
+          }
+        }
+      ).then(function(user){
+      res.send(user.notes);
+    })
 });
 
 module.exports = router;

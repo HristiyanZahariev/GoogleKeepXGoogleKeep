@@ -1,14 +1,14 @@
 var models  = require('./../models');
 var express = require('express');
 var router  = express.Router();
-var project = require('../models/project');
+var Project = require('../models/project');
 var Note = require('../models/note');
 var User = require('../models/user')
 var auth = require('./../config/auth')();
 
 
 router.post('/create', auth.authenticate(), function(req, res) {  
-  	project.create({
+  	Project.create({
     name: req.body.name,
     color: req.body.color,
     description: req.body.description
@@ -24,7 +24,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
 });
 
 router.post('/:project_id/user', auth.authenticate(), function(req, res) {
-  project.findById(
+  Project.findById(
     req.params.project_id, 
     {include: [{model: User, as: "users"}]})
   .then(function(project){
@@ -40,7 +40,7 @@ router.post('/:project_id/user', auth.authenticate(), function(req, res) {
 //adding note to a project by creating it with json on the body
 
 router.post('/:project_id/note', auth.authenticate(), function(req, res) {
-  project.findById(
+  Project.findById(
     req.params.project_id, 
     {include: [{model: Note, as: "notes"}]})
   .then(function(project){
@@ -62,7 +62,7 @@ router.post('/:project_id/note', auth.authenticate(), function(req, res) {
 //Adding note to a project with param note id
 
 router.post('/:project_id/notes/:note_id', auth.authenticate(), function(req, res) {
-  project.findById(
+  Project.findById(
     req.params.project_id, 
     {include: [{model: Note, as: "notes"}]})
   .then(function(project){
@@ -81,7 +81,7 @@ router.post('/:project_id/notes/:note_id', auth.authenticate(), function(req, re
 
 router.get("/", auth.authenticate(), function(req, res) {  
   console.log(req.user.id)
-    users.findOne(
+    User.findOne(
         {
           include: [{model: Project, as: "projects"}],
           where: {
@@ -94,7 +94,7 @@ router.get("/", auth.authenticate(), function(req, res) {
 });
 
 router.post('/:project_id/users/:user_id',auth.authenticate(), function(req, res) {
-  project.findById(
+  Project.findById(
     req.params.project_id,
     {include: [{model: User, as: "users"}, {model: Note, as: "notes"}]})
   .then(function(project){
@@ -112,7 +112,7 @@ router.post('/:project_id/users/:user_id',auth.authenticate(), function(req, res
 });
 
 router.get('/:project_id', function(req, res){
-  project.findById(
+  Project.findById(
     req.params.project_id, 
     {include: [{model: Note, as: "notes"},{model: User, as: "users"}]})
   .then(function(project){
@@ -121,7 +121,7 @@ router.get('/:project_id', function(req, res){
 });
 
 router.get('/:project_id/notes', function(req, res){
-  project.findById(
+  Project.findById(
     req.params.project_id, 
     {include: [{model: Note, as: "notes"},{model: User, as: "users"}]})
   .then(function(project){
