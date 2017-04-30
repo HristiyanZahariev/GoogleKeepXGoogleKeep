@@ -88,10 +88,10 @@ router.get('/', function(req, res, next) {
 });
 
 
-//var passportTwitter = require('../config/twitterauth.js');
-router.get('/auth/twitter', passport.authenticate('twitter'));
+var passportTwitter = require('../config/twitterauth.js');
+router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
 
-router.get('/auth/twitter/callback', passport.authenticate('twitter', {
+router.get('/auth/twitter/callback', passportTwitter.authenticate('twitter', {
     failureRedirect: '/login'
 }), function(req, res) {
     console.log('callback')
