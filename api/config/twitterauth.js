@@ -2,7 +2,7 @@ module.exports.loginWithTwitter = function (req, res) {
 
 var passport = require('passport');
 var Strategy = require('strategy');
-var User = require('../models/user.js')
+var User = require('../models')
 var TwitterStrategy = require('passport-twitter').Strategy;
 
 // used to serialize the user for the session

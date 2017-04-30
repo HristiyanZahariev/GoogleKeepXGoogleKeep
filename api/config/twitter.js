@@ -1,29 +1,30 @@
-// var user = require('../models/user');
+module.exports.loginWithTwitter = function (req, res) {
 
-// exports.login = function(req, res) {
-//     var user = req.user;
-//     req.login(user, function(err) {
-//         //if error: do something
-//         return res.status(200).json("Hello, " + user.username)
-//     });
-// };
-  
-var users = require("./../models/user");  
-var cfg = require("./config.js");  
-var config = require("./twitterConfig.js")
 var passport = require('passport');
+var Strategy = require('strategy');
+var User = require('./../models/user.js')
 var TwitterStrategy = require('passport-twitter').Strategy;
+
+// used to serialize the user for the session
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+// used to deserialize the user
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
 
 passport.use(new TwitterStrategy({
     consumerKey: config.twitter.consumerKey,
     consumerSecret: config.twitter.consumerSecret,
-    callbackURL: "https://morning-retreat-85964.herokuapp.com/auth/twitter/callback"
-  },
-  function(token, tokenSecret, profile, cb) {
-    User.findOrCreate({ id: profile.id }, function (err, user) {
-      return cb(err, user);
+    callbackURL: config.twitter.callbackURL
+}, function (token, tokenSecret, profile, cb) {
+    console.log('call');
+    process.nextTick(function () {
+        console.log(profile);
     });
-  }
-));
-
-module.exports = passport
+}));
+}
