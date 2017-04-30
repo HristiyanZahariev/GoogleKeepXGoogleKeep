@@ -17,12 +17,12 @@ var Project = sequelize.define('project', {
     field: 'name' 
   },
   color: {
-    type: Sequelize.STRING(),
+    type: Sequelize.INTEGER(),
     field: 'color'
   },
-  description: {
+  color_dark: {
    type: Sequelize.STRING(),
-   field: 'description'
+   field: 'color_dark'
   }
 },{
     classMethods:{
