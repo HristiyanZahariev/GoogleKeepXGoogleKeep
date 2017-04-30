@@ -72,4 +72,15 @@ router.get('/', function(req, res) {
 	});
 });
 
+var passportTwitter = require('../config/twitterauth.js');
+
+router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
+
+router.get('/auth/twitter/callback',
+  passportTwitter.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication
+    res.json(req.user);
+  });
+
 module.exports = router;

@@ -19,6 +19,12 @@ var User = require('./api/models/user');
 
 var app = express();
 
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
 // app.use(logger('dev'));
 app.use(bodyParser.json());
 // app.use(cookieParser()); // read cookies (needed for auth)

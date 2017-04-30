@@ -1,0 +1,9 @@
+var ids = {
+  twitter: {
+    consumerKey: 'kJXY5uDoleQ82D3VFsL0mkLsE',
+    consumerSecret: 'R2x5ECXSKRhQyMQ2aerQQev39Z0Lrl7Y9eHBMVYCLkDEWFtAL4',
+    callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
+  }
+};
+
+module.exports = ids;

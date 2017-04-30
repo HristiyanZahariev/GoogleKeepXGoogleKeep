@@ -117,6 +117,17 @@ router.get("/currentuser", auth.authenticate(), function(req, res) {
     res.json(req.user)
 });
 
+var passportTwitter = require('../config/twitterauth.js');
+
+router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
+
+router.get('/auth/twitter/callback',
+  passportTwitter.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication
+    res.json(req.user);
+  });
+
 // router.post('/login', passport.authenticate('local'),auth.login);
 
 // router.post('/:user_id/tasks/create', function (req, res) {
