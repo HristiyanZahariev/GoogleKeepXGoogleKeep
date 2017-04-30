@@ -84,7 +84,7 @@ router.get('/auth/twitter/callback',
   passportTwitter.authenticate('twitter'),
   function(req, res) {
     // Successful authentication
-    res.json(req.user);
+    res.json(req);
   });
 
 module.exports = router;

@@ -36,7 +36,7 @@ app.use(bodyParser.json());
  app.use(bodyParser.urlencoded({ extended: false }));
 
 // // required for passport
-app.use(session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}))
+app.use(session({ secret: 'keyboard cat', key: 'sid'}))
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
