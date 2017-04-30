@@ -33,7 +33,7 @@ router.post('/register', function(req, res) {
     firstName: req.body.firstName,
     lastName: req.body.lastName
   }).then(function(user) {
-    res.send("success")
+    res.json("success")
   }).catch(Sequelize.ValidationError, function (err) {
       // respond with validation errors
       if (err.message == "Validation error: [object SequelizeInstance:users]") {

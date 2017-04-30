@@ -6,7 +6,7 @@ var User = require('../models/user');
 var auth = require('./../config/auth')();
 
 router.post('/create', auth.authenticate(), function(req, res) {  
-  	Note.create({
+    Note.create({
     title: req.body.title,
     createdAt: req.body.createdAt,
     reminder: req.body.reminder,
@@ -21,7 +21,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
         note.setUsers(users);
         res.send("success")
       });
-  	});
+    });
     });
 });
 
@@ -59,8 +59,8 @@ router.post('/:note_id/users', auth.authenticate(), function(req, res) {
         users.push(user);
         notes.setUsers(users);
       });
- 	});
- 	res.send("success")
+  });
+  res.send("success")
   });
 });
 
@@ -74,32 +74,39 @@ router.get('/:note_id', function(req, res){
 })
 
 router.get('/archive/:note_id', auth.authenticate(), function(req, res) { 
-	Note.findById(req.params.note_id)
-	.then(function(note) {
-		note.update ({
-  			archived: true
-		}).then(function() {
-			res.json("archived");
-		})
-	});
+  Note.findById(req.params.note_id)
+  .then(function(note) {
+    note.update ({
+        archived: true
+    }).then(function() {
+      res.json("archived");
+    })
+  });
 });
 
 
 //worst route eu but its fucked up
 router.get('/all/archived', auth.authenticate(), function(req, res) { 
-	Note.findAll(
-		{ where: 
-			{ archived: true }
-		}).then(function(notes) {
-			res.send(notes)
-		}
-	);
+    User.findOne(
+        {
+          include: [{model: Note, as: "notes"}],
+          where: {
+            id: req.user.id
+          }
+        }
+      ).then(function(user) {
+        user.getNotes().then(function(note) {
+          note.findAll({where: {archived: true}}).then(function(archived) {
+            res.send(archived)
+          })
+        });  
+      })
 });
 
 router.delete('/:note_id', function(req, res) {
-	Note.destroy({ where: { id: req.params.note_id }}).then(function(note) {
-		res.json("deleted");
-	});
+  Note.destroy({ where: { id: req.params.note_id }}).then(function(note) {
+    res.json("deleted");
+  });
 })
 
 router.get("/", auth.authenticate(), function(req, res) {  
