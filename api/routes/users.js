@@ -23,8 +23,8 @@ router.post('/create', function(req, res) {
     email: req.body.email,
     firstName: req.body.firstName,
     lastName: req.body.lastName
-  }).then(function() {
-    res.redirect('/');
+  }).then(function(user) {
+    res.sned(user);
   });
 });
 

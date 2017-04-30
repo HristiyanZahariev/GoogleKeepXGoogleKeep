@@ -26,18 +26,21 @@ passport.use(new TwitterStrategy({
     };
 
     // update the user if s/he exists or add a new user
-    User.findOneAndUpdate(searchQuery, updates, options, function(err, user) {
-      if(err) {
-        return done(err);
-      } else {
-        return done(null, user);
-      }
-    });
+    User.find({ where: { username: profile.displayName } })
+    .on('success', function (user) {
+    // Check if record exists in db
+    if (user) {
+      user.updateAttributes({
+        username: 'a very different title now'
+      })
+      .success(function () {})
+    }
+  })
   }
 
 ));
 
-// serialize user into the session
+//serialize user into the session
 //init();
 
 
