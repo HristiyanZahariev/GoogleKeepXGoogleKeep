@@ -28,13 +28,14 @@ app.use(session({
 }));
 // app.use(logger('dev'));
 app.use(bodyParser.json());
-// app.use(cookieParser()); // read cookies (needed for auth)
+ app.use(cookieParser()); // read cookies (needed for auth)
  app.use(bodyParser.urlencoded({ extended: false }));
 
 // // required for passport
-// app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
+app.use(session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}))
+
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 // app.use(flash()); // use connect-flash for flash messages stored in session
 // var LocalStrategy   = require('passport-local').Strategy;
 
