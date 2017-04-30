@@ -11,8 +11,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
   	Project.create({
     name: req.body.name,
     color: req.body.color,
-    color_dark: req.body.colorDark,
-    description: req.body.description
+    color_dark: req.body.colorDark
  	}).then(function(project) {
   		project.getUsers().then(function(users) {
   			User.findById(req.user.id).then(function(user) {
@@ -54,7 +53,7 @@ router.post('/:project_id/note', auth.authenticate(), function(req, res) {
       contentType: req.body.contentType,
       projectId: req.body.projectId
     }).then(function() {
-      res.redirect('/projects/' + req.params.project_id);
+      res.json("success")
     });
     // res.json(project);
   });
