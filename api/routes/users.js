@@ -13,6 +13,7 @@ var jwt = require('jsonwebtoken');
 var cfg = require("../config/config");
 var bcrypt = require('bcrypt-nodejs');
 var Note = require('../models/note')
+var Sequelize = require('sequelize')
 var Project = require('../models/project')
 
 router.post('/create', function(req, res) {
@@ -24,8 +25,20 @@ router.post('/create', function(req, res) {
     firstName: req.body.firstName,
     lastName: req.body.lastName
   }).then(function(user) {
-    res.sned(user);
-  });
+    res.send("success")
+  })       .catch(Sequelize.ValidationError, function (err) {
+            // respond with validation errors
+            if (err.message == "Validation error: [object SequelizeInstance:users]") {
+              return res.status(401).send("Username must be unique")
+            }
+            return res.status(401).send(err.message);
+        })
+        .catch(function (err) {
+            // every other error
+            return res.status(400).send({
+                message: err.message
+            });
+        });
 });
 
 router.get('/', function(req, res){
