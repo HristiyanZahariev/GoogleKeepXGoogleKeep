@@ -122,9 +122,9 @@ var password = config.password ? config.password : null;
 //   });
 
 
-// // IMPORT ROUTES
-// // =============================================================================
-// var router = express.Router();
+// IMPORT ROUTES
+// =============================================================================
+var router = express.Router();
 
 // // on routes that end in /users
 // // ----------------------------------------------------
