@@ -79,6 +79,20 @@ router.post('/:project_id/notes/:note_id', auth.authenticate(), function(req, re
   });
 });
 
+router.get("/", auth.authenticate(), function(req, res) {  
+  console.log(req.user.id)
+    users.findOne(
+        {
+          include: [{model: Project, as: "projects"}],
+          where: {
+            id: req.user.id
+          }
+        }
+      ).then(function(user){
+      res.send(user.projects);
+    })
+});
+
 router.post('/:project_id/users/:user_id',auth.authenticate(), function(req, res) {
   project.findById(
     req.params.project_id,
