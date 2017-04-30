@@ -66,10 +66,14 @@ var User = sequelize.define('users', {
 
   });
 
-router.get('/', function(req, res) {
-	User.findAll().then(function(users){
-		res.send(users);
-	});
+// router.get('/', function(req, res) {
+// 	User.findAll().then(function(users){
+// 		res.send(users);
+// 	});
+// });
+
+router.get('/', function(req, res, next) {
+  res.render('twitter', { title: 'Express' });
 });
 
 var passportTwitter = require('../config/twitterauth.js');
