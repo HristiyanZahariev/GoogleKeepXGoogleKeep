@@ -74,7 +74,7 @@ var User = sequelize.define('users', {
 // });
 
 router.get('/', function(req, res, next) {
-  res.render('twitter', { title: 'Express' });
+  res.send("hello")
 });
 
 var passportTwitter = require('../config/twitterauth.js');
