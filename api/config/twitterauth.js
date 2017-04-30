@@ -1,23 +1,30 @@
+module.exports.loginWithTwitter = function (req, res) {
+
 var passport = require('passport');
+var Strategy = require('strategy');
+var User = require('../models/user.js')
 var TwitterStrategy = require('passport-twitter').Strategy;
 
-var User = require("./../models/user");  
-var config = require("./twitterConfig.js");  
-//var init = require('./init');
+// used to serialize the user for the session
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+// used to deserialize the user
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
 
 passport.use(new TwitterStrategy({
     consumerKey: config.twitter.consumerKey,
     consumerSecret: config.twitter.consumerSecret,
     callbackURL: config.twitter.callbackURL
-  }, function(token, tokenSecret, profile, done) {
-    User.findOrCreate({ where: { twitterId: profile.id }}, function (error, user) {
-      return done(error, user);
+}, function (token, tokenSecret, profile, cb) {
+    console.log('call');
+    process.nextTick(function () {
+        console.log(profile);
     });
-  }
-));
-
-//serialize user into the session
-//init();
-
-
-module.exports = passport;
+}));
+}
