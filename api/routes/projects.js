@@ -11,7 +11,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
   	Project.create({
     name: req.body.name,
     color: req.body.color,
-    color_dark: req.body.color_dark
+    color_dark: req.body.color_dark,
     description: req.body.description
  	}).then(function(project) {
   		project.getUsers().then(function(users) {
