@@ -1,6 +1,7 @@
 var models = require('../models/user.js');
 var express = require('express');
 var router = express.Router();
+var passportTwitter = require('../config/twitter.js');
 
 var Sequelize = require("sequelize");
 
@@ -71,5 +72,14 @@ router.get('/', function(req, res) {
 		res.send(users);
 	});
 });
+
+router.get('/auth/twitter', passportTwitter.authenticate('twitter'));
+
+router.get('/auth/twitter/callback',
+  passportTwitter.authenticate('twitter'),
+  function(req, res) {
+    // Successful authentication
+    res.json(req.user);
+  });
 
 module.exports = router;

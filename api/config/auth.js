@@ -12,6 +12,7 @@ var passport = require("passport");
 var passportJWT = require("passport-jwt");  
 var users = require("./../models/user");  
 var cfg = require("./config.js");  
+var config = require("./twitterConfig.js")
 var ExtractJwt = passportJWT.ExtractJwt;  
 var Strategy = passportJWT.Strategy;  
 var params = {  
