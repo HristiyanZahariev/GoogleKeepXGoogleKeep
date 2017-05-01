@@ -146,53 +146,53 @@ router.get("/", auth.authenticate(), function(req, res) {
 var serverKey = 'AAAAV3UyUvc:APA91bEU_Ff1AwilNBeqpg5f8pcYvpkCUzeHYqckAfR4myWs6NbimxPFi8jDnJtWutlyxtmku-QqLfIYNme2-06JnOXGIrtg2zOkQq5uRcnvBwSIcceFB-3UJ9N9JTYTz1UPFNv9GpaY';
 var fcm = new FCM(serverKey);
 
-var job = new CronJob('0,30 * * * * *', function() {
-  console.log(proposedDate)
-  Note.findAll({
-      where: {
-        reminder: {$ne: null}
-      }
-    }).then(function(notes) {
-      notes.forEach(function(note) {
-        console.log(note.reminder)
-        if (moment(proposedDate).isAfter(moment(note.reminder))) {
-          Note.findById(note.id,
-            {include: [{model: User, as: "users"}]}
-          ).then(function(note) {
-            note.getUsers().then(function(users) {
-              users.forEach(function(user) {
-                console.log("DEVICE TOKEN: " + user.deviceToken)
-                var message = {
-                  to: user.deviceToken, // required fill with device token or topi
-                  notification: {
-                      title: 'This is a reminder for your notes' ,
-                      body: 'Body of your push notification'
-                  }
-                };
-                var serverKey = 'AAAAV3UyUvc:APA91bEU_Ff1AwilNBeqpg5f8pcYvpkCUzeHYqckAfR4myWs6NbimxPFi8jDnJtWutlyxtmku-QqLfIYNme2-06JnOXGIrtg2zOkQq5uRcnvBwSIcceFB-3UJ9N9JTYTz1UPFNv9GpaY';
-                var fcm = new FCM(serverKey);
-                //callback style
-                fcm.send(message, function(err, response){
-                    if (err) {
-                        console.log("Something has gone wrong!");
-                        console.log(err)
-                    } else {
-                        console.log("Successfully sent with response: ", response);
-                    }
-                });
-              })
-            })
-          })
-        note.update({
-          reminder: null
-        })
-        }
-      });
-    })
-  }, function () {
-    /* This function is executed when the job stops */
-  },
-  true
-);
+// var job = new CronJob('0,30 * * * * *', function() {
+//   console.log(proposedDate)
+//   Note.findAll({
+//       where: {
+//         reminder: {$ne: null}
+//       }
+//     }).then(function(notes) {
+//       notes.forEach(function(note) {
+//         console.log(note.reminder)
+//         if (moment(proposedDate).isAfter(moment(note.reminder))) {
+//           Note.findById(note.id,
+//             {include: [{model: User, as: "users"}]}
+//           ).then(function(note) {
+//             note.getUsers().then(function(users) {
+//               users.forEach(function(user) {
+//                 console.log("DEVICE TOKEN: " + user.deviceToken)
+//                 var message = {
+//                   to: user.deviceToken, // required fill with device token or topi
+//                   notification: {
+//                       title: 'This is a reminder for your notes' ,
+//                       body: 'Body of your push notification'
+//                   }
+//                 };
+//                 var serverKey = 'AAAAV3UyUvc:APA91bEU_Ff1AwilNBeqpg5f8pcYvpkCUzeHYqckAfR4myWs6NbimxPFi8jDnJtWutlyxtmku-QqLfIYNme2-06JnOXGIrtg2zOkQq5uRcnvBwSIcceFB-3UJ9N9JTYTz1UPFNv9GpaY';
+//                 var fcm = new FCM(serverKey);
+//                 //callback style
+//                 fcm.send(message, function(err, response){
+//                     if (err) {
+//                         console.log("Something has gone wrong!");
+//                         console.log(err)
+//                     } else {
+//                         console.log("Successfully sent with response: ", response);
+//                     }
+//                 });
+//               })
+//             })
+//           })
+//         note.update({
+//           reminder: null
+//         })
+//         }
+//       });
+//     })
+//   }, function () {
+//     /* This function is executed when the job stops */
+//   },
+//   true
+// );
 
 module.exports = router;
