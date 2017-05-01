@@ -54,7 +54,7 @@ router.get("/usu", auth.authenticate(), function(req, res) {
 });
 
 router.post("/deviceToken", auth.authenticate(), function(req, res) {  
-    users.findById(req.user).then(function(user) {
+    users.findById(req.user.id).then(function(user) {
       users.update({
         deviceToken: req.body.deviceToken
       }).then(function() {
@@ -94,7 +94,7 @@ router.post("/deviceToken", auth.authenticate(), function(req, res) {
 // })
 
 //Basic request header for authentication: Authorization: JWT JSON_WEB_TOKEN_STRING.....
-router.get("/currentuser", auth.authenticate(), function(req, res) {  
+router.get("/user/currentUser", auth.authenticate(), function(req, res) {  
     res.json(req.user)
 });
 
