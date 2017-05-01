@@ -70,7 +70,7 @@ router.post("/login", function(req, res) {
     bcrypt.compare(req.body.password, user.password, function(err, response) { 
       // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
       console.log(user.id)
-      var payload = {id: user.twitterId};
+      var payload = {id: user.id};
       var token = jwt.sign(payload, cfg.jwtSecret);
       res.json({message: "ok", token: token});
     });

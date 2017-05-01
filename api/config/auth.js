@@ -22,15 +22,15 @@ var params = {
 
 module.exports = function() {  
     var strategy = new Strategy(params, function(payload, done) {
-      	users.findById(payload.id).then(function(user) {
-		    if (user) {
-		        return done(null, {
-		            id: user.id
-		        });
-		    } else {
-		        return done(new Error("User not found"), null);
-		    }
-		});
+        users.findById(payload.id).then(function(user) {
+            if (user) {
+                return done(null, {
+                    id: user.id
+                });
+            } else {
+                return done(new Error("User not found"), null);
+            }
+        });
     });
     passport.use(strategy);
     return {
