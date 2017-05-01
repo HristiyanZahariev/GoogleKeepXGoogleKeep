@@ -51,7 +51,7 @@ router.post('/:project_id/note', auth.authenticate(), function(req, res) {
       createdAt: req.body.createdAt,
       reminder: req.body.reminder,
       content: req.body.content,
-      contentType: req.body.contentType,
+      content_type: req.body.content_type,
       projectId: req.params.project_id
     }).then(function() {
       res.json("success")

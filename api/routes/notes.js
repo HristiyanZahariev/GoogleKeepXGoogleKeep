@@ -12,7 +12,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
     createdAt: req.body.createdAt,
     reminder: req.body.reminder,
     content: req.body.content,
-    contentType: req.body.content_type,
+    content_type: req.body.content_type,
     archived: false
     // projectId: req.body.projectId
   }).then(function(note){
