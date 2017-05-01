@@ -36,13 +36,19 @@ passport.use(new TwitterStrategy({
     };
 
     // update the user if s/he exists or add a new use
-               User.findOne({ where: { 'twitterId' : profile.id }}).then(function(user) {
+          User.findAll({
+            where: {
+              twitterId: profile.id
+            }
+          }
+          ).then(function(user) {
+                console.log(user)
                 // if the user is found then log them in
                 if (user) {
                     return done(null, user); // user found, return that user
                 } else {
                     // if there is no user, create them
-                    User.build({ twitterId: profile.id, username: profile.username}).save().then(function(newUser) {
+                    User.create({ twitterId: profile.id, username: profile.username}).then(function(newUser) {
                         return done(null, newUser);
                       });
                 }

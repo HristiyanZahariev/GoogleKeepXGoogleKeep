@@ -52,7 +52,7 @@ router.post('/:project_id/note', auth.authenticate(), function(req, res) {
       reminder: req.body.reminder,
       content: req.body.content,
       contentType: req.body.contentType,
-      projectId: req.body.projectId
+      projectId: req.params.project_id
     }).then(function() {
       res.json("success")
     });
