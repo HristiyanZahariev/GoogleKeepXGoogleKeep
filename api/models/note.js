@@ -49,10 +49,6 @@ var Note = sequelize.define('note', {
  	archived: {
  		type: Sequelize.BOOLEAN(),
  		field: 'archived'
- 	},
- 	status: {
- 		type: Sequelize.ENUM("ToDo", "Doing", "Done"),
- 		field: 'status'
  	}
 }, {
   freezeTableName: true // Model tableName will be the same as the model namere
