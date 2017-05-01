@@ -41,6 +41,11 @@ router.get('/:user_id/projects', function(req, res) {
   });
 })
 
+var passport = require('../config/twitterauth.js');
+router.get("/usu", auth.authenticate(), function(req, res) {  
+    res.json(req.user)
+});
+
 
 // router.post("/login", function(req, res) {
 //   hashedPass = bcrypt.hashSync(req.body.password)

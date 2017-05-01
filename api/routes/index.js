@@ -70,7 +70,7 @@ router.post("/login", function(req, res) {
     bcrypt.compare(req.body.password, user.password, function(err, response) { 
       // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
       console.log(user.id)
-      var payload = {id: user.id};
+      var payload = {id: user.twitterId};
       var token = jwt.sign(payload, cfg.jwtSecret);
       res.json({message: "ok", token: token});
     });
@@ -88,15 +88,19 @@ router.get('/', function(req, res, next) {
 });
 
 
-var passport = require('passport');
-router.get('/auth/twitter', passport.authenticate('passport-twitter'));
+var passport = require('../config/twitterauth.js');
+router.get('/auth/twitter',
+  passport.authenticate('twitter'));
 
-router.get('/auth/twitter/callback', passport.authenticate('passport-twitter', {
-    failureRedirect: '/login'
-}), function(req, res) {
-    console.log('callback')
-        // Successful authentication, redirect home.
-    res.redirect('/');
-});
+router.get('/auth/twitter/callback', 
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+      var payload = {id: req.user};
+      var token = jwt.sign(payload, cfg.jwtSecret);
+      res.json({message: "ok", token: token});
+      console.log(req.user)
+    // Successful authentication, redirect home.
+    //res.redirect('/');
+  });
 
 module.exports = router;
