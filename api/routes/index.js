@@ -95,7 +95,7 @@ router.get('/auth/twitter',
 router.get('/auth/twitter/callback', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
-      var payload = {id: req.user};
+      var payload = {id: req.user.twitterId};
       var token = jwt.sign(payload, cfg.jwtSecret);
       res.json({message: "ok", token: token});
       console.log(req.user)
