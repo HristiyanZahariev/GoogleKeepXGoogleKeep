@@ -32,6 +32,16 @@ router.get('/:user_id/notes', function(req, res) {
   });
 })
 
+
+router.get('/notes', auth.authenticate(), function(req, res) { 
+  users.findById(
+    req.user.id,
+    {include: [{model: Note, as: "notes"}]})
+  .then(function(user){
+    res.json(user.notes);
+  });
+})
+
 router.get('/:user_id/projects', function(req, res) {
   users.findById(
     req.params.user_id,

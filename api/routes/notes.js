@@ -78,6 +78,17 @@ router.get('/:note_id', function(req, res){
   });
 })
 
+router.post('/:note_id/reminder', auth.authenticate(), function(req, res) { 
+  Note.findById(req.params.note_id)
+  .then(function(note) {
+    note.update ({
+        reminder: req.body.reminder
+    }).then(function() {
+      res.json("success");
+    })
+  });
+});
+
 router.get('/archive/:note_id', auth.authenticate(), function(req, res) { 
   Note.findById(req.params.note_id)
   .then(function(note) {
