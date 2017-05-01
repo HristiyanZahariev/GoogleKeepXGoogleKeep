@@ -20,7 +20,7 @@ var Project = sequelize.define('project', {
     type: Sequelize.INTEGER(),
     field: 'color'
   },
-  color_dark: {
+  colorDark: {
    type: Sequelize.STRING(),
    field: 'color_dark'
   }
