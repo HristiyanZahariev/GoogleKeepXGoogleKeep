@@ -58,7 +58,7 @@ router.post("/deviceToken", auth.authenticate(), function(req, res) {
       users.update({
         deviceToken: req.body.deviceToken
       }).then(function() {
-        res.json("recived");
+        res.json("success");
       })
     })
 });
