@@ -41,6 +41,13 @@ router.get('/:user_id/projects', function(req, res) {
   });
 })
 
+router.get('/:user_id/', function(req, res) {
+  users.findById(req.params.user_id)
+  .then(function(user) {
+    res.json(user)
+  });
+})
+
 var passport = require('../config/twitterauth.js');
 router.get("/usu", auth.authenticate(), function(req, res) {  
     res.json(req.user)
