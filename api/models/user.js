@@ -24,7 +24,7 @@ var User = sequelize.define('users', {
   },
   username: {
     type: Sequelize.STRING(),
-    field: 'username'
+    field: 'username',
     validate: {
       isUnique: function(value, next) {
 
