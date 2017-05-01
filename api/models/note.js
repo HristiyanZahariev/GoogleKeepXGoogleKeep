@@ -43,7 +43,7 @@ var Note = sequelize.define('note', {
  		field: 'content'
  	},
  	contentType: {
- 		type: Sequelize.STRING(),
+ 		type: Sequelize.INTEGER(),
  		field: 'content_type'
  	},
  	archived: {
