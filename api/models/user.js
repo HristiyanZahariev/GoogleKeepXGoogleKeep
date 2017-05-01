@@ -14,8 +14,9 @@ var User = sequelize.define('users', {
    field: 'id'
   },
   twitterId: {
-    type: Sequelize.INTEGER(),
-    field: 'twitterId'
+    type: Sequelize.BIGINT(),
+    field: 'twitterId',
+    subquery: true 
   },
   username: {
     type: Sequelize.STRING(),

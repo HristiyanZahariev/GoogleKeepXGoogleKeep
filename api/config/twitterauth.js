@@ -36,22 +36,30 @@ passport.use(new TwitterStrategy({
     };
 
     // update the user if s/he exists or add a new use
-          User.findAll({
+          User.findOrCreate({
             where: {
-              twitterId: profile.id
+              twitterId: profile.id,
+            },
+            defaults: {
+              twitterId: profile.id,
+              username: profile.displayName
             }
           }
-          ).then(function(user) {
-                console.log(user)
+          ).spread(function(user) {
+              console.log(user)
                 // if the user is found then log them in
-                if (user) {
-                    return done(null, user); // user found, return that user
-                } else {
-                    // if there is no user, create them
-                    User.create({ twitterId: profile.id, username: profile.username}).then(function(newUser) {
-                        return done(null, newUser);
-                      });
-                }
+                //if (user) {
+                    return done(null, {
+                        id: user.id,
+                        twitterId: user.twitterId
+                      }
+                    ); // user found, return that user
+                // } else {
+                //     // if there is no user, create them
+                //     User.create({ twitterId: profile.id, username: profile.displayName}).then(function(newUser) {
+                //         return done(null, newUser);
+                //       });
+                // }
             });
   }
 
