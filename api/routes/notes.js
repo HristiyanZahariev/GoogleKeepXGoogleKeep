@@ -6,6 +6,7 @@ var User = require('../models/user');
 var auth = require('./../config/auth')();
 var CronJob = require('cron').CronJob;
 var moment = require('moment')
+var FCM = require('fcm-push');
 var localTime = moment().format('YYYY-MM-DD'); // store localTime
 var proposedDate = localTime + "T" + moment().format('HH:MM:SS') + ".000Z";
 
@@ -131,6 +132,8 @@ router.get("/", auth.authenticate(), function(req, res) {
       res.json(user.notes);
     })
 });
+var serverKey = 'AAAAV3UyUvc:APA91bEU_Ff1AwilNBeqpg5f8pcYvpkCUzeHYqckAfR4myWs6NbimxPFi8jDnJtWutlyxtmku-QqLfIYNme2-06JnOXGIrtg2zOkQq5uRcnvBwSIcceFB-3UJ9N9JTYTz1UPFNv9GpaY';
+var fcm = new FCM(serverKey);
 
 var job = new CronJob('0,30 * * * * *', function() {
   console.log(proposedDate)
@@ -145,13 +148,33 @@ var job = new CronJob('0,30 * * * * *', function() {
           Note.findById(note.id,
             {include: [{model: User, as: "users"}]}
           ).then(function(note) {
-
             note.getUsers().then(function(users) {
               users.forEach(function(user) {
-                console.log(user.id)
+                console.log("DEVICE TOKEN: " + user.deviceToken)
+                var message = {
+                  to: user.deviceToken, // required fill with device token or topi
+                  notification: {
+                      title: 'This is a reminder for your notes' ,
+                      body: 'Body of your push notification'
+                  }
+                };
+                var serverKey = 'AAAAV3UyUvc:APA91bEU_Ff1AwilNBeqpg5f8pcYvpkCUzeHYqckAfR4myWs6NbimxPFi8jDnJtWutlyxtmku-QqLfIYNme2-06JnOXGIrtg2zOkQq5uRcnvBwSIcceFB-3UJ9N9JTYTz1UPFNv9GpaY';
+                var fcm = new FCM(serverKey);
+                //callback style
+                fcm.send(message, function(err, response){
+                    if (err) {
+                        console.log("Something has gone wrong!");
+                        console.log(err)
+                    } else {
+                        console.log("Successfully sent with response: ", response);
+                    }
+                });
               })
             })
           })
+        note.update({
+          reminder: null
+        })
         }
       });
     })

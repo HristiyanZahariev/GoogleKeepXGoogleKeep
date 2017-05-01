@@ -25,32 +25,32 @@ var User = sequelize.define('users', {
   username: {
     type: Sequelize.STRING(),
     field: 'username'
-   //  validate: {
-   //    isUnique: function(value, next) {
+    validate: {
+      isUnique: function(value, next) {
 
-   //        User.find({
-   //            where: {username: value}
-   //        })
-   //            .then(function(error, user) {
+          User.find({
+              where: {username: value}
+          })
+              .then(function(error, user) {
 
-   //                if (error)
-   //                    // Some unexpected error occured with the find method.
-   //                    return next(error);
+                  if (error)
+                      // Some unexpected error occured with the find method.
+                      return next(error);
 
-   //                if (user)
-   //                    // We found a user with this email address.
-   //                    // Pass the error to the next method.
-   //                    return next('Username already in use!');
+                  if (user)
+                      // We found a user with this email address.
+                      // Pass the error to the next method.
+                      return next('Username already in use!');
 
-   //                // If we got this far, the email address hasn't been used yet.
-   //                // Call next with no arguments when validation is successful.
-   //                next();
+                  // If we got this far, the email address hasn't been used yet.
+                  // Call next with no arguments when validation is successful.
+                  next();
 
-   //            });
+              });
 
-   //    }
-   //  },
-   // allowNull: false
+      }
+    },
+   allowNull: false
 
   },
   password: {
