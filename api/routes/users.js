@@ -55,7 +55,7 @@ router.get("/usu", auth.authenticate(), function(req, res) {
 
 router.post("/deviceToken", auth.authenticate(), function(req, res) {  
     users.findById(req.user.id).then(function(user) {
-      users.update({
+      user.update({
         deviceToken: req.body.deviceToken
       }).then(function() {
         res.json("success");
