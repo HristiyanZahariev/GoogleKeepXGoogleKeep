@@ -14,8 +14,8 @@ router.post('/create', auth.authenticate(), function(req, res) {
     colorDark: req.body.colorDark
  	}).then(function(project) {
   		project.getUsers().then(function(users) {
-  			User.findById(req.user.id).then(function(user) {
           console.log("USER_ID:" + req.user.id)
+        User.findById(req.user.id).then(function(user) {
   				users.push(user)
   				project.setUsers(users);
   			});
