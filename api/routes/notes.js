@@ -5,6 +5,9 @@ var Note = require('../models/note');
 var User = require('../models/user');
 var auth = require('./../config/auth')();
 var CronJob = require('cron').CronJob;
+var moment = require('moment')
+var localTime = moment().format('YYYY-MM-DD'); // store localTime
+var proposedDate = localTime + "T" + moment().format('HH:MM:SS') + ".000Z";
 
 router.post('/create', auth.authenticate(), function(req, res) {  
     Note.create({
@@ -130,7 +133,28 @@ router.get("/", auth.authenticate(), function(req, res) {
 });
 
 var job = new CronJob('0,30 * * * * *', function() {
-    console.log("sup")
+  console.log(proposedDate)
+  Note.findAll({
+      where: {
+        reminder: {$ne: null}
+      }
+    }).then(function(notes) {
+      notes.forEach(function(note) {
+        console.log(note.reminder)
+        if (moment(proposedDate).isAfter(moment(note.reminder))) {
+          Note.findById(note.id,
+            {include: [{model: User, as: "users"}]}
+          ).then(function(note) {
+
+            note.getUsers().then(function(users) {
+              users.forEach(function(user) {
+                console.log(user.id)
+              })
+            })
+          })
+        }
+      });
+    })
   }, function () {
     /* This function is executed when the job stops */
   },

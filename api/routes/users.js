@@ -53,6 +53,16 @@ router.get("/usu", auth.authenticate(), function(req, res) {
     res.json(req.user)
 });
 
+router.post("/deviceToken", auth.authenticate(), function(req, res) {  
+    users.findById(req.user).then(function(user) {
+      users.update({
+        deviceToken: req.body.deviceToken
+      }).then(function() {
+        res.json("recived");
+      })
+    })
+});
+
 
 // router.post("/login", function(req, res) {
 //   hashedPass = bcrypt.hashSync(req.body.password)

@@ -13,6 +13,10 @@ var User = sequelize.define('users', {
    primaryKey: true,
    field: 'id'
   },
+  deviceToken: {
+    type: Sequelize.STRING(),
+    field: 'device_token'
+  },
   twitterId: {
     type: Sequelize.BIGINT(),
     field: 'twitterId',
