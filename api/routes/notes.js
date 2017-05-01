@@ -4,6 +4,7 @@ var router  = express.Router();
 var Note = require('../models/note');
 var User = require('../models/user');
 var auth = require('./../config/auth')();
+var CronJob = require('cron').CronJob;
 
 router.post('/create', auth.authenticate(), function(req, res) {  
     Note.create({
@@ -11,7 +12,7 @@ router.post('/create', auth.authenticate(), function(req, res) {
     createdAt: req.body.createdAt,
     reminder: req.body.reminder,
     content: req.body.content,
-    contentType: req.body.contentType,
+    contentType: req.body.content_type,
     archived: false
     // projectId: req.body.projectId
   }).then(function(note){
@@ -127,5 +128,13 @@ router.get("/", auth.authenticate(), function(req, res) {
       res.json(user.notes);
     })
 });
+
+var job = new CronJob('0,30 * * * * *', function() {
+    console.log("sup")
+  }, function () {
+    /* This function is executed when the job stops */
+  },
+  true
+);
 
 module.exports = router;

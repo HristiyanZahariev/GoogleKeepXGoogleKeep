@@ -87,7 +87,6 @@ router.get('/', function(req, res, next) {
   res.json("hello")
 });
 
-
 var passport = require('../config/twitterauth.js');
 router.get('/auth/twitter',
   passport.authenticate('twitter'));
@@ -97,7 +96,7 @@ router.get('/auth/twitter/callback',
   function(req, res) {
     console.log("REQ USER " + req.user.username)
     console.log("REQ USER ID " + req.user.id)
-      var payload = {id: req.user.id};
+      var payload = {id: req.user.id};x
       var token = jwt.sign(payload, cfg.jwtSecret);
       res.json({message: "ok", token: token});
     // Successful authentication, redirect home.
